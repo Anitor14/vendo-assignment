@@ -39,7 +39,7 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-UserSchema.pre("save", async function () {
+UserSchema.pre("save", async function () {   
   if (!this.isModified("password")) return; // we are returning cause we don't want to hash the password again if it is not being modified.
   const salt = await bcrypt.genSalt(10); // generate random bytes.
   this.password = await bcrypt.hash(this.password, salt); //hashing the password with the salt.

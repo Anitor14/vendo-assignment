@@ -9,5 +9,5 @@ const {
 
 router.route("/showMe").get(authenticateUser, showCurrentUser);
 router.route("/showDirectReferrals").get(authenticateUser, showDirectReferrals);
-
+    
 module.exports = router;
