@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const { statusCodes, StatusCodes } = require("http-status-codes");
+const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
 
 const showCurrentUser = async (req, res) => {
@@ -27,12 +27,15 @@ const showDirectReferrals = async (req, res) => {
       referredCode: referralCode,
     }).select("-password");
     console.log(referredUsers.length);
-
-    referredUsers.map((referredUser) => {
+    // if (referredUsers.length == 0) {
+    //   return;
+    // }
+    referredUsers.map(async (referredUser) => {
       console.log(referredUser);
       node.add(referredUser);
-      addChildrenToNode(referredUser);
+      await addChildrenToNode(referredUser);
     });
+    return node;
   };
   await addChildrenToNode(user);
   res.status(StatusCodes.OK).json({ node });

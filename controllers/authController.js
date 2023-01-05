@@ -14,17 +14,16 @@ const register = async (req, res) => {
     throw new CustomError.BadRequestError("Email already exists");
   }
 
-  const isFirstAccount = (await User.countDocuments({})) === 0; // checking for the first account.
+  // const isFirstAccount = (await User.countDocuments({})) === 0; // checking for the first account.
 
   const referralCode = crypto.randomBytes(3).toString("hex");
 
   // if the user registers with a referred code we check if the code exists.
 
-  if (!isFirstAccount) {
-    // if you are not the first user and you did not input a referred code.
-    if (!referredCode) {
-      throw new CustomError.BadRequestError("please input a Referred Code.");
-    }
+  // if (!referredCode) {
+  //   throw new CustomError.BadRequestError("please input a Referred Code.");
+  // }
+  if (!referralCode == null) {
     const existingReferralCode = await User.findOne({
       referralCode: referredCode,
     });
@@ -35,7 +34,7 @@ const register = async (req, res) => {
       );
     }
   }
-  
+
   //creating the user.
   const user = await User.create({
     ...req.body,
