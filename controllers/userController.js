@@ -30,12 +30,16 @@ const showDirectReferrals = async (req, res) => {
     // if (referredUsers.length == 0) {
     //   return;
     // }
-    referredUsers.map(async (referredUser) => {
+    referredUsers.forEach((referredUser) => {
       console.log(referredUser);
       node.add(referredUser);
-      await addChildrenToNode(referredUser);
     });
-    return node;
+    await Promise.all(
+      referredUsers.map(async (referredUser) => {
+        await addChildrenToNode(referredUser);
+      })
+    );
+    // return node;
   };
   await addChildrenToNode(user);
   res.status(StatusCodes.OK).json({ node });
