@@ -15,7 +15,7 @@ const register = async (req, res) => {
   }
 
   // const isFirstAccount = (await User.countDocuments({})) === 0; // checking for the first account.
-
+  let level;
   const referralCode = crypto.randomBytes(3).toString("hex");
 
   // if the user registers with a referred code we check if the code exists.
@@ -23,7 +23,12 @@ const register = async (req, res) => {
   // if (!referredCode) {
   //   throw new CustomError.BadRequestError("please input a Referred Code.");
   // }
-  if (!referralCode == null) {
+  // checking for a valid referred code.
+  if (referredCode == null) {
+    level = 0;
+  }
+
+  if (referredCode) {
     const existingReferralCode = await User.findOne({
       referralCode: referredCode,
     });
@@ -33,11 +38,12 @@ const register = async (req, res) => {
         "please input a valid Referred Code"
       );
     }
+    level = existingReferralCode.level + 1;
   }
-
   //creating the user.
   const user = await User.create({
     ...req.body,
+    level,
     referralCode,
   });
 

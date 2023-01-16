@@ -4,10 +4,10 @@ const { authenticateUser } = require("../middleware/authentication");
 
 const {
   showCurrentUser,
-  showDirectReferrals,
+  showReferrals,
 } = require("../controllers/userController");
 
 router.route("/showMe").get(authenticateUser, showCurrentUser);
-router.route("/showDirectReferrals").get(authenticateUser, showDirectReferrals);
-    
+router.route("/showDirectReferrals").get(authenticateUser, showReferrals);
+
 module.exports = router;
