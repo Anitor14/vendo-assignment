@@ -9,7 +9,7 @@ const showCurrentUser = async (req, res) => {
 
 const showReferrals = async (req, res) => {
   class Node {
-    constructor(data) { 
+    constructor(data) {
       this.data = data;
       this.children = [];
     }
