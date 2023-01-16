@@ -7,7 +7,7 @@ const showCurrentUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ user: req.user });
 };
 
-const showDirectReferrals = async (req, res) => {
+const showReferrals = async (req, res) => {
   class Node {
     constructor(data) {
       this.data = data;
@@ -47,5 +47,5 @@ const showDirectReferrals = async (req, res) => {
 
 module.exports = {
   showCurrentUser,
-  showDirectReferrals,
+  showReferrals,
 };
